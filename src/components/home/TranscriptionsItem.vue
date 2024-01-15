@@ -6,7 +6,7 @@
   >
     <div class="transcriptions__item__header">
       <div class="transcriptions__item__header__left">
-        <input :id="item?.id" type="checkbox" class="transcriptions__item__checkbox" />
+        <input type="checkbox" class="transcriptions__item__checkbox" />
         <img src="@/assets/icons/person.svg" />
         <input
           v-if="showInput('voice') || !item?.id"
@@ -18,7 +18,7 @@
           @blur="setActiveInput(null)"
         />
         <span v-else @click="handleInput('voice')" class="transcriptions__item__title">
-          {{ item?.voice }}</span
+          {{ voice }}</span
         >
       </div>
       <button
@@ -45,7 +45,7 @@
       @blur="setActiveInput(null)"
     />
     <p v-else class="transcriptions__item__content" @click="handleInput('content')">
-      {{ item?.text }}
+      {{ text }}
     </p>
 
     <button
@@ -66,7 +66,7 @@ const props = defineProps({
   rowItem: Object
 })
 
-const emit = defineEmits(['removeItem', 'add-item'])
+const emit = defineEmits(['removeItem', 'add-item', 'update-item'])
 
 const item = ref(props.rowItem)
 const text = ref(item.value?.text)
@@ -90,6 +90,18 @@ const handleInput = (inputType: string) => {
 
 const setActiveInput = (inputType: string | null) => {
   activeInput.value = inputType
+
+  updateItem()
+}
+
+const updateItem = () => {
+  if (text.value !== item.value.text || voice.value !== item.value.voice) {
+    emit('update-item', {
+      id: item.value?.id,
+      voice: voice.value,
+      text: text.value
+    })
+  }
 }
 </script>
 <style lang="scss">

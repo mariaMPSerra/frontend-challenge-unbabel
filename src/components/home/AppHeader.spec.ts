@@ -20,6 +20,7 @@ describe('AppHeader Component', () => {
       const transcriptionsStore = useTranscriptionsStore()
 
       vi.spyOn(transcriptionsStore, 'updateTranscriptionsData')
+      vi.spyOn(window, 'alert').mockImplementation(() => {})
 
       const wrapper = mount(AppHeader)
 
@@ -28,6 +29,7 @@ describe('AppHeader Component', () => {
       await flushPromises()
 
       expect(transcriptionsStore.updateTranscriptionsData).toHaveBeenCalled()
+      expect(window.alert).toHaveBeenCalled()
     })
   })
 })

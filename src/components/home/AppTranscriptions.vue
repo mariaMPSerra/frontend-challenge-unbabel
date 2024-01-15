@@ -1,11 +1,20 @@
 <template>
   <div class="transcriptions">
     <div class="transcriptions__content" v-if="data?.length">
-      <template v-for="rowItem in data" :key="rowItem.id">
-        <TranscriptionsItem :row-item="rowItem" @removeItem="removeItem" />
+      <template v-for="(rowItem, i) in data" :key="i">
+        <TranscriptionsItem
+          :row-item="rowItem"
+          @removeItem="removeItem"
+          @update-item="updateItem"
+        />
       </template>
 
-      <TranscriptionsItem v-if="addNewRow" :row-item="{}" @add-item="addItem" />
+      <TranscriptionsItem
+        v-if="addNewRow"
+        :row-item="{}"
+        @add-item="addItem"
+        @update-item="updateItem"
+      />
     </div>
     <button
       @click.stop="manageNewRow(!addNewRow)"
@@ -19,7 +28,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { defineExpose } from 'vue'
 import TranscriptionsItem from '../home/TranscriptionsItem.vue'
 import { storeToRefs } from 'pinia'
 import { useTranscriptionsStore } from '@/store/index'
@@ -38,6 +46,10 @@ const manageNewRow = (value: boolean) => {
   if (addNewRow.value !== value) {
     addNewRow.value = value
   }
+}
+
+const updateItem = (item) => {
+  updateTranscriptionsItems(item, 'update')
 }
 
 const addItem = (newItem) => {

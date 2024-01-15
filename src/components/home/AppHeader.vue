@@ -3,7 +3,7 @@
     <div class="transcriptions__header__content">
       <h3 class="transcriptions__header__title">Transcriptions</h3>
       <div class="transcriptions__header__actions">
-        <button @click="updateTranscriptions" :disabled="!data?.length">
+        <button @click="updateTranscriptions" :disabled="!data?.length || initialData === data">
           <img src="@/assets/icons/upload.svg" class="transcriptions__header__btn" />
         </button>
         <button @click="getTranscriptionsData">
@@ -20,10 +20,14 @@ import { storeToRefs } from 'pinia'
 
 const transcriptionsStore = useTranscriptionsStore()
 const { getTranscriptionsData, updateTranscriptionsData } = transcriptionsStore
-const { data } = storeToRefs(transcriptionsStore)
+const { data, initialData } = storeToRefs(transcriptionsStore)
 
 const updateTranscriptions = async () => {
-  await updateTranscriptionsData()
+  const response = await updateTranscriptionsData()
+
+  if (response?.data) {
+    alert('Transcriptions Updated!')
+  }
 }
 </script>
 

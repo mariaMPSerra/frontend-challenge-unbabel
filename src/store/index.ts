@@ -3,7 +3,8 @@ import { updateTranscriptions } from '@/api/updateTranscriptions'
 import { defineStore } from 'pinia'
 
 const transcriptionsInitialState = {
-  data: []
+  data: [],
+  initialData: []
 }
 
 export const useTranscriptionsStore = defineStore('transcriptions', {
@@ -14,6 +15,7 @@ export const useTranscriptionsStore = defineStore('transcriptions', {
         const response = await getTranscriptions()
 
         this.data = response
+        this.initialData = response
       } catch (error) {
         return console.error('Error fetching home data:', error)
       }
@@ -21,6 +23,8 @@ export const useTranscriptionsStore = defineStore('transcriptions', {
     async updateTranscriptionsData() {
       try {
         const response = await updateTranscriptions(this.data)
+
+        this.initialData = this.data
 
         return response
       } catch (error) {
@@ -30,8 +34,12 @@ export const useTranscriptionsStore = defineStore('transcriptions', {
     updateTranscriptionsItems(itemData, type) {
       if (type === 'add') {
         this.data?.push(itemData)
-      } else {
+      } else if (type === 'remove') {
         this.data = this.data?.filter((item) => item.id !== itemData)
+      } else {
+        this.data = this.data.map((item) => {
+          return item.id === itemData.id ? itemData : item
+        })
       }
     },
     addNewTranscriptionsItem(newItem) {
