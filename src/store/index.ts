@@ -1,14 +1,15 @@
 import { getTranscriptions } from '@/api/getTranscriptions'
 import { updateTranscriptions } from '@/api/updateTranscriptions'
+import type { IItemType, ItranscriptionsState } from '@/typescript'
 import { defineStore } from 'pinia'
 
 const transcriptionsInitialState = {
   data: [],
   initialData: []
-}
+} as ItranscriptionsState
 
 export const useTranscriptionsStore = defineStore('transcriptions', {
-  state: () => transcriptionsInitialState,
+  state: () => ({ ...transcriptionsInitialState }),
   actions: {
     async getTranscriptionsData() {
       try {
@@ -31,7 +32,7 @@ export const useTranscriptionsStore = defineStore('transcriptions', {
         console.error('Error update data:', error)
       }
     },
-    updateTranscriptionsItems(itemData, type) {
+    updateTranscriptionsItems(itemData: IItemType | number, type: string) {
       if (type === 'add') {
         this.data?.push(itemData)
       } else if (type === 'remove') {
@@ -42,7 +43,7 @@ export const useTranscriptionsStore = defineStore('transcriptions', {
         })
       }
     },
-    addNewTranscriptionsItem(newItem) {
+    addNewTranscriptionsItem(newItem: IItemType) {
       this.data.push(newItem)
     }
   }

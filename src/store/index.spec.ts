@@ -1,8 +1,9 @@
-import { afterEach, describe, beforeEach, expect, it, vi } from 'vitest'
+import { describe, beforeEach, expect, it, vi } from 'vitest'
 import { useTranscriptionsStore } from './index' // Replace with the correct path
 import { getTranscriptions } from '@/api/getTranscriptions'
 import { updateTranscriptions } from '@/api/updateTranscriptions'
 import { createPinia, setActivePinia } from 'pinia'
+import { nextTick } from 'vue'
 
 vi.mock('@/api/getTranscriptions')
 
@@ -14,10 +15,10 @@ describe('useTranscriptionsStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     store = useTranscriptionsStore()
-  })
 
-  afterEach(() => {
-    vi.clearAllMocks()
+    vi.resetAllMocks()
+    vi.restoreAllMocks()
+    store.$reset()
   })
 
   it('should initialize with empty data', () => {
@@ -25,7 +26,7 @@ describe('useTranscriptionsStore', () => {
   })
 
   it('should fetch transcriptions data', async () => {
-    const data = [{ id: 1, text: 'Mock transcription', voice: 'voice 1' }]
+    const data = [{ id: 1, text: 'Mock', voice: 'voice 1' }]
 
     getTranscriptions.mockImplementationOnce(() => data)
 
@@ -33,8 +34,6 @@ describe('useTranscriptionsStore', () => {
 
     expect(store.data).toEqual(data)
     expect(getTranscriptions).toHaveBeenCalled()
-
-    vi.resetAllMocks()
   })
 
   it('should handle error while fetching transcriptions data', async () => {
@@ -46,8 +45,6 @@ describe('useTranscriptionsStore', () => {
 
     expect(result).toBeUndefined()
     expect(console.error).toHaveBeenCalledWith('Error fetching home data:', expect.any(Error))
-
-    vi.resetAllMocks()
   })
 
   it('should update transcriptions data', async () => {
@@ -65,8 +62,6 @@ describe('useTranscriptionsStore', () => {
 
     expect(result).toBeUndefined()
     expect(console.error).toHaveBeenCalledWith('Error update data:', expect.any(Error))
-
-    vi.resetAllMocks()
   })
 
   it('should add new transcription item', () => {
@@ -75,17 +70,13 @@ describe('useTranscriptionsStore', () => {
     store.addNewTranscriptionsItem(newItem)
 
     expect(store.data).toContainEqual(newItem)
-
-    vi.resetAllMocks()
   })
 
-  it('should update transcriptions items (remove)', () => {
-    const existingItem = { id: 1, text: 'Mock transcription', voice: 'voice 2' }
+  it('should remove transcriptions item', () => {
+    const existingItem = { id: 1, text: 'Mock', voice: 'voice 2' }
 
     store.updateTranscriptionsItems(existingItem.id, 'remove')
 
     expect(store.data).not.toContainEqual(existingItem)
-
-    vi.resetAllMocks()
   })
 })

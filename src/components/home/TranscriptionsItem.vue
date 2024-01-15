@@ -60,10 +60,11 @@
 
 <script setup lang="ts">
 import { vFocus } from '@/directives/vFocus'
+import type { IItemType } from '@/typescript'
 import { ref, computed } from 'vue'
 
 const props = defineProps({
-  rowItem: Object
+  rowItem: (Object as () => IItemType) || {}
 })
 
 const emit = defineEmits(['removeItem', 'add-item', 'update-item'])
@@ -99,7 +100,7 @@ const handleInputBlur = () => {
 }
 
 const updateItem = () => {
-  if (text.value !== item.value.text || voice.value !== item.value.voice) {
+  if (text.value !== item.value?.text || voice.value !== item.value?.voice) {
     emit('update-item', {
       id: item.value?.id,
       voice: voice.value,

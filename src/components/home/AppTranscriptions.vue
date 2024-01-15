@@ -31,6 +31,7 @@ import { ref } from 'vue'
 import TranscriptionsItem from '../home/TranscriptionsItem.vue'
 import { storeToRefs } from 'pinia'
 import { useTranscriptionsStore } from '@/store/index'
+import type { IItemType } from '@/typescript'
 
 const transcriptionsStore = useTranscriptionsStore()
 const { data } = storeToRefs(transcriptionsStore)
@@ -48,11 +49,11 @@ const manageNewRow = (value: boolean) => {
   }
 }
 
-const updateItem = (item) => {
+const updateItem = (item: IItemType) => {
   updateTranscriptionsItems(item, 'update')
 }
 
-const addItem = (newItem) => {
+const addItem = (newItem: IItemType) => {
   if (!!newItem.voice && !!newItem.text) {
     updateTranscriptionsItems(
       {
