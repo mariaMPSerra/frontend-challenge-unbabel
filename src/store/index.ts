@@ -38,7 +38,7 @@ export const useTranscriptionsStore = defineStore('transcriptions', {
         this.data = this.data?.filter((item) => item.id !== itemData)
       } else {
         this.data = this.data.map((item) => {
-          return item.id === itemData.id ? itemData : item
+          return item.id === itemData.id ? { ...item, ...itemData } : item
         })
       }
     },
