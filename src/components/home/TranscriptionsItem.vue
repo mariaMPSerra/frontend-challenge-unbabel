@@ -42,7 +42,7 @@
       class="transcriptions__item__input content"
       v-focus
       @focus="setActiveInput('content')"
-      @blur="setActiveInput(null)"
+      @blur="handleInputBlur"
     />
     <p v-else class="transcriptions__item__content" @click="handleInput('content')">
       {{ text }}
@@ -90,6 +90,10 @@ const handleInput = (inputType: string) => {
 
 const setActiveInput = (inputType: string | null) => {
   activeInput.value = inputType
+}
+
+const handleInputBlur = () => {
+  setActiveInput(null)
 
   updateItem()
 }
