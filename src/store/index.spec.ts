@@ -79,4 +79,18 @@ describe('useTranscriptionsStore', () => {
 
     expect(store.data).not.toContainEqual(existingItem)
   })
+
+  it('should update transcriptions item', () => {
+    store.data = []
+
+    const item = { id: 1, text: 'Mock', voice: 'voice 2' }
+
+    store.updateTranscriptionsItems(item, 'add')
+
+    const updatedItem = { id: 1, text: 'New Mock', voice: 'voice 2' }
+
+    store.updateTranscriptionsItems(updatedItem, 'update')
+
+    expect(store.data).not.toContainEqual([updatedItem])
+  })
 })
