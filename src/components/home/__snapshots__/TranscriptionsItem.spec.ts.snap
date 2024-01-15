@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TranscriptionsItem Component > renders TranscriptionsItem component 1`] = `
+"<div class="transcriptions__item">
+  <div class="transcriptions__item__header">
+    <div class="transcriptions__item__header__left"><input type="checkbox" class="transcriptions__item__checkbox"><img src="/src/assets/icons/person.svg"><input class="transcriptions__item__input title" placeholder="New Item voice"></div>
+    <!--v-if--><button class="transcriptions__item__add desktop"><span>Add</span></button>
+  </div><textarea placeholder="New Item Description" class="transcriptions__item__input content"></textarea><button class="transcriptions__item__add mobile"><span>Add</span></button>
+</div>"
+`;

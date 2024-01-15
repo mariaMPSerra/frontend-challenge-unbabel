@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AppHome Component > renders AppHome component 1`] = `
+"<div class="transcriptions__header">
+  <div class="transcriptions__header__content">
+    <h3 class="transcriptions__header__title">Transcriptions</h3>
+    <div class="transcriptions__header__actions"><button disabled=""><img src="/src/assets/icons/upload.svg" class="transcriptions__header__btn"></button><button><img src="/src/assets/icons/fetch-document.svg" class="transcriptions__header__btn"></button></div>
+  </div>
+</div>"
+`;

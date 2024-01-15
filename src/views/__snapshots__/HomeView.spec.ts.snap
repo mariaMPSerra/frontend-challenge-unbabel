@@ -1,0 +1,8 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AppHome Component > renders AppHome component 1`] = `
+"<div class="home">
+  <app-header-stub></app-header-stub>
+  <transcriptions-stub></transcriptions-stub>
+</div>"
+`;
